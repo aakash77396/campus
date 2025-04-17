@@ -1,0 +1,59 @@
+{
+    "/api/users": {
+        "post": {
+            "summary": "Save user data",
+            "tags": ["Users"],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["sub", "name", "email", "email_verified", "picture"],
+                            "properties": {
+                                "sub": { "type": "string" },
+                                "name": { "type": "string" },
+                                "email": { "type": "string" },
+                                "email_verified": { "type": "boolean" },
+                                "picture": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": { "description": "User created successfully" },
+                "200": { "description": "User already exists" },
+                "400": { "description": "Invalid user data" },
+                "500": { "description": "Error saving user" }
+            }
+        },
+        "get": {
+            "summary": "Get all user data",
+            "tags": ["Users"],
+            "responses": {
+                "200": { "description": "Users retrieved successfully" },
+                "500": { "description": "Error fetching users" }
+            }
+        }
+    },
+    "/api/users/{sub}": {
+        "get": {
+            "summary": "Fetch user by ID",
+            "tags": ["Users"],
+            "parameters": [
+                {
+                    "name": "sub",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+            ],
+            "responses": {
+                "200": { "description": "User retrieved successfully" },
+                "404": { "description": "User not found" },
+                "500": { "description": "Error fetching user" }
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "/api/auth/signup": {
+        "post": {
+            "summary": "Register a new user",
+            "tags": ["Authentication"],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["name", "email", "password"],
+                            "properties": {
+                                "name": { "type": "string" },
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": { "description": "User registered successfully" },
+                "400": { "description": "User already exists" }
+            }
+        }
+    },
+    "/api/auth/login": {
+        "post": {
+            "summary": "Authenticate user and get a token",
+            "tags": ["Authentication"],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["email", "password"],
+                            "properties": {
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": { "description": "User logged in successfully" },
+                "401": { "description": "Invalid credentials" }
+            }
+        }
+    },
+    "/api/auth/user": {
+        "get": {
+            "summary": "Get authenticated user data",
+            "tags": ["Authentication"],
+            "responses": {
+                "200": { "description": "Authenticated user data retrieved successfully" },
+                "401": { "description": "User not authenticated" }
+            }
+        }
+    },
+    "/api/auth/logout": {
+        "post": {
+            "summary": "Logout user",
+            "tags": ["Authentication"],
+            "responses": {
+                "200": { "description": "Logged out successfully" }
+            }
+        }
+    }
+}

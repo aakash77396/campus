@@ -1,0 +1,149 @@
+{
+    "/api/posts": {
+        "post": {
+            "summary": "Save a new post with image upload and NSFW filter",
+            "tags": ["Posts"],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "multipart/form-data": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["userId", "files"],
+                            "properties": {
+                                "userId": { "type": "string" },
+                                "files": {
+                                    "type": "array",
+                                    "items": { "type": "string", "format": "binary" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": { "description": "Post saved successfully" },
+                "200": { "description": "Images added to existing post" },
+                "400": { "description": "No files uploaded or invalid data" },
+                "500": { "description": "Internal Server Error" }
+            }
+        }
+    },
+    "/api/posts/{userId}": {
+        "get": {
+            "summary": "Access posts of a specific user",
+            "tags": ["Posts"],
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+            ],
+            "responses": {
+                "200": { "description": "Posts retrieved successfully" },
+                "404": { "description": "No posts found for this user" },
+                "500": { "description": "Internal Server Error" }
+            }
+        }
+    },
+    "/api/posts/{userId}/delete-image": {
+        "delete": {
+            "summary": "Delete an image from a user's post",
+            "tags": ["Posts"],
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["imageIndex"],
+                            "properties": {
+                                "imageIndex": { "type": "integer" }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": { "description": "Image deleted successfully" },
+                "404": { "description": "Post not found" },
+                "500": { "description": "Internal Server Error" }
+            }
+        }
+    },
+    "/api/posts/{userId}/update-caption": {
+        "put": {
+            "summary": "Update the caption of a user's post",
+            "tags": ["Posts"],
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "required": ["postIndex", "caption"],
+                            "properties": {
+                                "postIndex": { "type": "integer" },
+                                "caption": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": { "description": "Caption updated successfully" },
+                "400": { "description": "Invalid post index" },
+                "404": { "description": "User posts not found" },
+                "500": { "description": "Server error" }
+            }
+        }
+    },
+    "/api/posts/random/{userId}": {
+        "get": {
+            "summary": "Fetch a random post of a specific user",
+            "tags": ["Posts"],
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "schema": { "type": "string" }
+                }
+            ],
+            "responses": {
+                "200": { "description": "Random post retrieved successfully" },
+                "404": { "description": "No posts found for this user" },
+                "500": { "description": "Server error" }
+            }
+        }
+    },
+    "/api/posts/random": {
+        "get": {
+            "summary": "Fetch random posts from all users",
+            "tags": ["Posts"],
+            "responses": {
+                "200": { "description": "Random posts retrieved successfully" },
+                "404": { "description": "No posts available" },
+                "500": { "description": "Server error" }
+            }
+        }
+    }
+}
