@@ -93,8 +93,9 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://aesthetic-truffle-e2a62e.netlify.app", // ✅ React frontend ka URL
+        origin: "https://campusmitra.netlify.app/", // ✅ React frontend ka URL
         methods: ["GET", "POST"],
+        credentials: true,
     },
 });
 
