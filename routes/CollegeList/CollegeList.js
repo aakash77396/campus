@@ -1,7 +1,7 @@
 const express = require("express");
 const College = require("../../models/collegeList"); // College Model Import
 const router = express.Router();
-import { authenticateUser } from "../../middleware/auth";
+// const  authenticateUser = require("../../middleware/auth");
 
 // 🔹 Get All College Names
 router.get("/", async (req, res) => {
@@ -14,9 +14,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-
 // ✅ College Name Store Karne Ka Route
-router.post("/",authenticateUser, async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const { name, location, website } = req.body;
 
