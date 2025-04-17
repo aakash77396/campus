@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+
 // ✅ College Name Store Karne Ka Route
 router.post("/",authenticateUser, async (req, res) => {
     try {
