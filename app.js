@@ -44,11 +44,13 @@ cloudinary.config({
 
 // ✅ Correct CORS configuration
 app.use(
-    cors({
-        origin: "https://campusmitra.netlify.app", // Allow requests from any origin (for testing)
-        credentials: true,
-    })
+  cors({
+    origin: ["https://campusmitra.netlify.app", "http://localhost:4000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
 );
+
 
 // app.use((req, res, next) => {
 //     res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
