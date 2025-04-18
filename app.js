@@ -44,12 +44,12 @@ cloudinary.config({
 
 // ✅ Correct CORS configuration
 app.use(
-  cors({
-    origin: ["https://campusmitra.netlify.app", "http://localhost:4000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+    cors({
+      origin: ["https://campusmitra.netlify.app", "http://localhost:4000", "http://campusmitra.in","https://campusmitra.in"],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      credentials: true,
+    })
+  );
 
 
 // app.use((req, res, next) => {
