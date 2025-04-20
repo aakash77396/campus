@@ -43,13 +43,27 @@ cloudinary.config({
 
 
 // ✅ Correct CORS configuration
+const allowedOrigins = [
+    "https://campusmitra.netlify.app",
+    "http://localhost:4000"
+];
+
 app.use(
     cors({
-      origin: ["https://campusmitra.netlify.app", "http://localhost:4000", "http://campusmitra.in","https://campusmitra.in"],
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      credentials: true,
+        origin: (origin, callback) => {
+            if (origin && allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
     })
-  );
+);
+
+
+
+
 
 
 // app.use((req, res, next) => {
@@ -117,6 +131,15 @@ io.on("connection", (socket) => {
 });
 const fileUpload = require("express-fileupload");
 
+// ✅ ✅ Add this BEFORE your API routes (very important!)
+app.use((req, res, next) => {
+    const apiSource = req.headers["x-api-source"];
+    if (apiSource !== "campusmitra-client") {
+        return res.status(403).json({ message: "Access denied" });
+    }
+    next();
+});
+
 app.use("/uploads", express.static("uploads"));
 app.use("/api/posts", require("./routes/posts/posts"));
 app.use("/api/users", require("./routes/users/users"));
@@ -126,8 +149,9 @@ app.use("/api/profile/update", require("./routes/profileUpdate/profileUpdate"));
 app.use("/api/colleges", require("./routes/CollegeList/CollegeList"));
 app.use("/api/notices", require("./routes/CollegesNoticeHub/CollegesNoticeHub"));
 
+
 app.use(fileUpload({
-    useTempFiles:true
+    useTempFiles: true
 }));
 
 
