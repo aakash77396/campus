@@ -45,7 +45,8 @@ cloudinary.config({
 // ✅ Correct CORS configuration
 const allowedOrigins = [
     "https://campusmitra.netlify.app",
-    "http://localhost:4000"
+    "http://localhost:4000",
+    "https://www.campusmitra.in"
 ];
 
 app.use(
